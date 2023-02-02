@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import Button from '../reusable_elements/Button.js'
-import RegistrationFeedback from "./RegistrationFeedback.jsx"
 
 const RegistrationForm = () => {
     const [userData, setUserData] = useState()
     const [serverRes, setServerRes] = useState()
+    const navigate = useNavigate()
 
     function grabFormData(e) {
         e.preventDefault()
-        const userName = e.target['name'].value
+        const userName = e.target['username'].value
         const userPassword = e.target['password'].value
         const userEmail = e.target['email'].value
         const data = { "username": userName, "password": userPassword, "email": userEmail }
@@ -17,42 +18,54 @@ const RegistrationForm = () => {
         update()
     }
 
+    function calculateFeedback() {
+        if (!serverRes) {
+            return "Please register."
+        } else if (serverRes.status === 200) {
+            navigate("/login")
+            return "Success! User registered!"
+        } else if (serverRes.status === 400) {
+            console.error(serverRes.status)
+            return "Invalid user data!"
+        } else if (serverRes.status === 409) {
+            console.error(serverRes.status)
+            return "User already exists!"
+        }
+    }
+
     useEffect(() => {
         if (userData) {
-            try {
-                const backendUrl = `/api/registration`
-                fetch(backendUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify(userData)
-                }).then(res => res.json())
-                .then(res => setServerRes(res))
-            } catch (err) {
-                console.error(err)
-            }
+            setServerRes(null)
+            const backendUrl = `/api/registration`
+            fetch(backendUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify(userData)
+            }).then(res => setServerRes(res))
+                .catch((err) => {
+                    console.error(err)
+                })
         }
     }, [userData])
 
     return (
-        <>
-            <div className="registrationFormDiv">
-                <form className="registrationForm" onSubmit={(e) => grabFormData(e)}>
-                    <label>Name:</label>
-                    <input type="text" name="name" required>
-                    </input>
-                    <label>Password:</label>
-                    <input type="password" name="password" required>
-                    </input>
-                    <label>Email:</label>
-                    <input type="email" name="email" required>
-                    </input>
-                    <Button type='submit' text='Submit' />
-                    <RegistrationFeedback serverRes={serverRes} />
-                </form>
-            </div>
-        </>
+        <div className="registrationFormDiv">
+            <form className="registrationForm" onSubmit={(e) => grabFormData(e)}>
+                <label>Name:</label>
+                <input type="text" name="username" id={"registration-name"} required>
+                </input>
+                <label>Password:</label>
+                <input type="password" name="password" id={"registration-password"} required>
+                </input>
+                <label>Email:</label>
+                <input type="email" name="email" id={"registration-email"} required>
+                </input>
+                <Button type='submit' text='Submit' id={"registration-submit"} />
+                <div id={"registration-feedback"}>{calculateFeedback()}</div>
+            </form>
+        </div>
     )
 }
 

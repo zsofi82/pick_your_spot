@@ -1,12 +1,16 @@
 import Button from "../reusable_elements/Button"
 import PropTypes from 'prop-types'
+import {useContext} from "react";
+import {TokenContext} from "../../App";
 
-const TableModal = ({ table, onExit, onReserve }) => {
+const TableModal = ({ table, onExit, onReserve, selectedDate }) => {
+  const {token} = useContext(TokenContext)
+
   return (
     <div
       className="modal fade show"
       id="exampleModal"
-      tabindex="-1"
+      tabIndex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
       style={{ display: "block" }}
@@ -23,15 +27,17 @@ const TableModal = ({ table, onExit, onReserve }) => {
             <a
             href={`https://www.google.com/maps/search/${table.address}/`}
             target="_blank">{table.address}</a></div>
-            <div>At: {"[TODO: put currently selected reservation time here]"}</div>
+            <div>{selectedDate ? "At: " + selectedDate : "Please log in, and select a date to reserve"}</div>
           </div>
           <div className="modal-footer">
+            {(token && selectedDate !== null) && <Button
+                id={"reserve-button"}
+                text={"Reserve"}
+                bootstrapClassname={"btn-success"}
+                onClick={()=>onReserve(table.id)}
+                type={"button"} /> }
             <Button
-              text={"Reserve"}
-              bootstrapClassname={"btn-success"}
-              onClick={()=>onReserve(table.id)}
-              type={"button"} />
-            <Button
+                id={"modal-close"}
               text={"Close"}
               bootstrapClassname={"btn-secondary"}
               onClick={() => onExit()}
@@ -44,7 +50,7 @@ const TableModal = ({ table, onExit, onReserve }) => {
 }
 
 TableModal.propTypes = {
-  table: PropTypes.string,
+  table: PropTypes.object,
   onExit: PropTypes.func,
   onReserve: PropTypes.func,
 }

@@ -1,8 +1,8 @@
-import DeleteReservation from "./DeleteReservation";
+import DeleteReservationButton from "./DeleteReservationButton";
 
-const Reservation = ({reservation, tableId}) => {
-    return(
-        <p className="card-text"> {reservation.reservationTime} <DeleteReservation key={reservation.reservationTime} reservation={reservation} tableId={tableId}/> </p>
+const Reservation = ({ date, reservation, tableId, setDelete }) => {
+    return (
+        <p className="card-text" id={reservation.id}> {date} <DeleteReservationButton id={"delete-reservation-"+reservation.reservationTime} key={reservation.reservationTime} reservation={reservation} tableId={tableId} setDelete={setDelete} /> </p>
     )
 }
 export default Reservation

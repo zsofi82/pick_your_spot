@@ -1,47 +1,46 @@
-import {useState} from "react";
 import DateTimePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const SearchBar = ({filterTable}) => {
-    //TODO: get spots as properties
+const SearchBar = ({date, location, setDate, setLocation}) => {
+    //TODO: get spots as properties from the backend
     const spots = [
         {value: '', text: '-- Pick a spot --'},
-        {value: 'alpaka', text: 'Alpaka'},
-        {value: 'tableSpot', text: 'TableSpot'},
-        {value: 'here', text: 'Here'},
+        {value: 'Budapest', text: 'Budapest'},
+        {value: 'Székesfehérvár', text: 'Székesfehérvár'},
+        {value: 'Miskolc', text: 'Miskolc'},
+        {value: 'Tihany', text: 'Tihany'},
+        {value: 'Sopron', text: 'Sopron'},
+        {value: 'Meggyes', text: 'Meggyes'},
+        {value: 'Siófok', text: 'Siófok'},
     ];
-
-    const [selectedSpot, setSelectedSpot] = useState("");
-    const [date, setDate] = useState(new Date());
-
-    const handleChange = (e) => {
-        setSelectedSpot(e.target.value);
-    };
 
     return (
         <div className="container-fluid">
             <form className="row g-3 m-2">
                 <div className="col">
-                <select className="form-select" value={selectedSpot} onChange={handleChange}>
-                    {spots.map(spot => (
-                        <option key={spot.value} value={spot.value}>
-                            {spot.text}
-                        </option>
-                    ))}
-                </select>
+                    <select className="form-select" id={"spot-selection"} value={location} onChange={(e)=>setLocation(e.target.value)}>
+                        {spots.map(spot => (
+                            <option key={spot.value} id={spot.value} value={spot.value}>
+                                {spot.text}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div className="col">
-                <DateTimePicker className="form-select"
-                            selected={date}
-                            onChange={date => setDate(date)}
-                            showTimeSelect
-                            dateFormat="y MMMM d. HH:mm"
-                            timeFormat="HH:mm"
-                            timeIntervals={60}
-                />
+                    <DateTimePicker className="form-select" id={"date-picker"}
+                                    selected={date}
+                                    onChange={(date) => {
+                                        setDate(date)
+                                    }}
+                                    showTimeSelect
+                                    dateFormat="y MMMM d. HH:mm"
+                                    timeFormat="HH:mm"
+                                    timeIntervals={60}
+                    />
                 </div>
-                <div className="col" style={{textAlign:"left"}}>
-                    <button className="btn btn-primary" style={{backgroundColor:"#004752"}} type="submit" onClick={() => filterTable(selectedSpot, date)}>Pick</button>
+                {/* placeholder div to push the searchbar to the left */}
+                <div className="col" style={{textAlign: "left"}}>
+                                
                 </div>
             </form>
         </div>
