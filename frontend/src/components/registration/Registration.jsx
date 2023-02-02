@@ -1,26 +1,21 @@
 import RegistrationForm from "./RegistrationForm"
-import './Registration.css'
-import { useNavigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
+import { useContext } from "react";
+import { TokenContext } from "../../App";
 
-const Registration = ({loggedIn}) => {
-    const navigate = useNavigate()
-
-    function getCorrectRoute() {
-        if (loggedIn) {
-            navigate("/")
-        } else {
-            return (
-                <div className="registrationContainer">
-                    <h1>Registration:</h1>
-                    <RegistrationForm />
-                </div>)
-        }
-    }
-
+const Registration = () => {
+    const { token } = useContext(TokenContext)
 
     return (
         <>
-            {getCorrectRoute()}
+            {token ?
+                <Navigate to="/" replace />
+                :
+                <div className="registrationContainer">
+                    <h1>Registration:</h1>
+                    <RegistrationForm />
+                </div>
+            }
         </>
     )
 }

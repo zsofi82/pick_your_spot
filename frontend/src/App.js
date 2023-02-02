@@ -1,37 +1,36 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import './App.css';
 import Home from './components/main/Home';
 import Login from './components/login/Login';
 import Registration from './components/registration/Registration';
 import About from "./components/About";
-import React, { useEffect, useState } from "react";
-import User from "./components/user/User";
+import React, {createContext, useState} from "react";
+import UserProfilePage from "./components/user/UserProfilePage";
 import Layout from "./components/Layout";
+import Admin from "./components/admin/Admin";
+
+export const TokenContext = createContext(null)
 
 function App() {
     document.title = "Pick your spot"
-    const [loggedIn, setLoggedIn] = useState()
-
-    useEffect(() => {
-        const userName = sessionStorage.getItem("username")
-        const userId = sessionStorage.getItem("userid")
-    
-        setLoggedIn(userName && userId)
-      }, [loggedIn, setLoggedIn])
+    const [token, setToken] = useState(() => localStorage.getItem("token"))
 
     return (
         <div className="App">
-            <Router>
-                <Routes>
-                    <Route path="/" element={<Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
-                        <Route path="/registration" element={<Registration loggedIn={loggedIn}/>} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/user/:userId" element={<User loggedIn={loggedIn}/>} />
-                    </Route>
-                </Routes>
-            </Router>
+            <TokenContext.Provider value={{token, setToken}}>
+                <Router>
+                    <Routes>
+                        <Route path="/" element={<Layout/>}>
+                            <Route index element={<Home/>}/>
+                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/registration" element={<Registration/>}/>
+                            <Route path="/about" element={<About/>}/>
+                            <Route path="/user/:userId" element={<UserProfilePage/>}/>
+                            <Route path="/admin" element={<Admin/>}/>
+                        </Route>
+                    </Routes>
+                </Router>
+            </TokenContext.Provider>
         </div>
     );
 }

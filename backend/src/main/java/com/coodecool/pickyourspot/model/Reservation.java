@@ -1,0 +1,22 @@
+package com.coodecool.pickyourspot.model;
+
+import lombok.*;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Setter
+@Getter
+@EqualsAndHashCode
+public class Reservation{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    private LocalDateTime reservationTime;
+    @ManyToOne
+    private AppUser user;
+}

@@ -1,26 +1,21 @@
-
 import LoginForm from "./LoginForm"
-import "./Login.css"
-import { useNavigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
+import { useContext } from "react";
+import { TokenContext } from "../../App";
 
-const Login = ({ loggedIn, setLoggedIn }) => {
-    const navigate = useNavigate()
-
-    function getCorrectRoute() {
-        if (loggedIn) {
-            navigate("/")
-        } else {
-            return (
-            <div className="loginContainer">
-                <h1>Login:</h1>
-                <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-            </div>)
-        }
-    }
+const Login = () => {
+    const { token } = useContext(TokenContext)
 
     return (
         <>
-            {getCorrectRoute()}
+            {token ?
+                <Navigate to="/" replace />
+                :
+                <div className="loginContainer">
+                    <h1>Login:</h1>
+                    <LoginForm />
+                </div>
+            }
         </>
     )
 }
