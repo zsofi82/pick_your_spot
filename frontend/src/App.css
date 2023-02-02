@@ -48,6 +48,7 @@ body{
 
 .navbar-brand {
   color: #c9240d;
+  font-weight: bold;
 }
 
 .navbarButton {
@@ -71,11 +72,15 @@ body{
   border-radius: 10px;
 }
 
-.modal-style{
+.modal-style {
   background-color: #057d80;
   color: #cce8e3;
 }
 
+.btn-success {
+  background-color: #004752;
+  color: white;
+  
 .footer {
   font-style: italic;
 }
