@@ -1,0 +1,118 @@
+.App {
+  text-align: center;
+}
+
+body{
+  background-color: #cce8e3;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.navbar {
+  background-color: white;
+  color:#c9240d !important;
+}
+
+.navbar-brand {
+  color: #c9240d;
+}
+
+.navbarButton {
+  margin-left: 0.4em;
+}
+
+.backToHome:hover {
+  cursor: pointer;
+}
+
+
+.navbar-button-style {
+  background-color: #c9240d;
+  color: white;
+}
+
+.navbar-brand {
+  background-color: #ffab37;
+  color: white;
+  padding: 0.5em;
+  border-radius: 10px;
+}
+
+.modal-style{
+  background-color: #057d80;
+  color: #cce8e3;
+}
+
+.footer {
+  font-style: italic;
+}
+
+.creatorsContainer {
+  margin: 1%;
+  font-style: italic;
+}
+
+.tables-container { 
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2%;
+    column-gap: 2%;
+    margin-bottom: 8vh;
+}
+
+.tables-col {
+    justify-self: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tables-card {
+    width: 100%;
+    height: 40vh;
+    border-radius: 10px;
+}
+
+.tables-card-body {
+    border-radius: 10px;
+    padding: 1.5em;
+}
+
+.mainPageMap {
+    width: 100%;
+    height: 80%;
+}
